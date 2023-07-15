@@ -8,4 +8,10 @@ public class Carta {
     protected String getColor() {
         return this.color;
     }
+
+    public static String[] getListaCartasEspeciales(){
+        String[] output = new String[] {"bloqueo", "cambiar dirección", "sumar dos", "sumar cuatro", "cambiar color"};
+        return output;
+    }
+
 }

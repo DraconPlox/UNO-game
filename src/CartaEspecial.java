@@ -1,5 +1,5 @@
 public class CartaEspecial extends Carta{
-    private String tipo;
+    protected String tipo;
 
     public CartaEspecial(String color, String tipo){
         super(color);
@@ -14,4 +14,10 @@ public class CartaEspecial extends Carta{
     protected String getColor() {
         return super.getColor();
     }
+
+    @Override
+    public String toString(){
+        return "color: " + super.color + ", tipo: " + this.tipo;
+    }
+
 }
