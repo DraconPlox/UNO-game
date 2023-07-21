@@ -1,11 +1,11 @@
-public class Carta {
+public abstract class Carta {
     protected String color;
 
     public Carta(String color){
         this.color = color;
     }
 
-    protected String getColor() {
+    protected String getColor(){
         return this.color;
     }
 
@@ -13,5 +13,6 @@ public class Carta {
         String[] output = new String[] {"bloqueo", "cambiar dirección", "sumar dos", "sumar cuatro", "cambiar color"};
         return output;
     }
+
 
 }

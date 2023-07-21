@@ -1,18 +1,16 @@
 public class CartaEspecial extends Carta{
-    protected String tipo;
+    private String tipo;
 
     public CartaEspecial(String color, String tipo){
         super(color);
         this.tipo = tipo;
+        if(this.tipo == "cambiar color"){
+            this.color = "-";
+        }
     }
 
     public String getTipo() {
         return this.tipo;
-    }
-
-    @Override
-    protected String getColor() {
-        return super.getColor();
     }
 
     @Override

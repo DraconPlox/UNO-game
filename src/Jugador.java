@@ -3,10 +3,11 @@ public class Jugador {
     private int numeroCartas;
     private final int NUMERO_MAXIMO_CARTAS = 20;
     private Carta[] cartas;
+    StringBuilder sb = new StringBuilder();
 
-    public Jugador(String nombre, int numeroCartas){
+    public Jugador(String nombre){
         this.nombre = nombre;
-        this.numeroCartas = numeroCartas;
+        this.numeroCartas = 0;
         this.cartas = new Carta[NUMERO_MAXIMO_CARTAS];
     }
 
@@ -20,15 +21,32 @@ public class Jugador {
         }
     }
 
-    private String getCartas(){
-        String output = "";
+    public String getCartas(){
+        sb = new StringBuilder();
         for(int i = 0; i < this.numeroCartas; i++){
-            output += this.cartas[i] + " ";
+            sb.append(i + 1).append(") ").append(this.cartas[i]).append("\n");
         }
-        return output;
+        return sb.toString();
     }
+
+    public Carta getCarta(int cartaSeleccionada){
+        return this.cartas[cartaSeleccionada - 1];
+    }
+
+    public int getNumeroCartas() {
+        return this.numeroCartas;
+    }
+
     @Override
     public String toString(){
+        sb = new StringBuilder();
         return this.nombre + " " + getCartas();
+    }
+
+    public void usarCartaUsuario(int cartaSeleccionada){
+        for(int i = cartaSeleccionada - 1; i < this.numeroCartas; i++){
+            this.cartas[i] = this.cartas[i + 1];
+        }
+        this.numeroCartas--;
     }
 }

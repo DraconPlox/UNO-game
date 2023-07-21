@@ -1,5 +1,5 @@
 public class CartaNormal extends Carta{
-    protected int numero;
+    private int numero;
 
     public CartaNormal(String color, int numero){
         super(color);
@@ -8,11 +8,6 @@ public class CartaNormal extends Carta{
 
     public int getNumero() {
         return this.numero;
-    }
-
-    @Override
-    protected String getColor() {
-        return super.getColor();
     }
 
     @Override
