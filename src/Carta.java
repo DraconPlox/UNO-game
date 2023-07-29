@@ -1,4 +1,4 @@
-public abstract class Carta {
+public abstract class Carta{
     protected String color;
 
     public Carta(String color){
@@ -9,9 +9,8 @@ public abstract class Carta {
         return this.color;
     }
 
-    public static String[] getListaCartasEspeciales(){
-        String[] output = new String[] {"bloqueo", "cambiar dirección", "sumar dos", "sumar cuatro", "cambiar color"};
-        return output;
+    public static String[] getListaColores(){
+        return new String[] {"rojo", "verde", "amarillo", "azul"};
     }
 
 

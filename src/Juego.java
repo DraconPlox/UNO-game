@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Juego {
     private final int NUMERO_MAXIMO_JUGADORES = 5;
-    private final String[] LISTA_COLORES = {"rojo", "verde", "amarillo", "azul"};
     private Jugador[] jugadores;
     private int numeroJugadores;
     private String colorActual;
@@ -23,7 +22,7 @@ public class Juego {
             this.numeroJugadores = this.NUMERO_MAXIMO_JUGADORES;
         }
         this.jugadores = new Jugador[this.numeroJugadores];
-        this.cartaActual = new CartaNormal(this.LISTA_COLORES[random.nextInt(4)], random.nextInt(10));
+        this.cartaActual = new CartaNormal(Carta.getListaColores()[random.nextInt(4)], random.nextInt(10));
         this.colorActual = this.cartaActual.getColor();
         System.out.println("Asignando las cartas a los jugadores...");
         asignarJugadores();
@@ -46,7 +45,7 @@ public class Juego {
     private void asignarCartas() {
         for (int i = 0; i < this.jugadores.length; i++) {
             for (int j = 0; j < 7; j++) {
-                this.jugadores[i].setCartas(this.LISTA_COLORES[random.nextInt(4)], random.nextInt(15));
+                this.jugadores[i].setCarta(Carta.getListaColores()[random.nextInt(4)], random.nextInt(15));
             }
         }
     }
@@ -62,33 +61,71 @@ public class Juego {
         return output;
     }
 
+    private boolean jugadorTieneCartaValida(){
+        return this.jugadores[0].tieneCartaValida(this.cartaActual);
+    }
+
+    private void turnoJugador(){
+        int cartaSeleccionada = scanner.nextInt();
+        if ((cartaSeleccionada < 0) || (cartaSeleccionada > this.jugadores[0].getNumeroCartas())){
+            System.out.println("Selección invalida.");
+        }
+        if (this.jugadores[0].getCarta(cartaSeleccionada - 1) instanceof CartaNormal) {
+            CartaNormal cartaSeleccionadaNormal = (CartaNormal) this.jugadores[0].getCarta( cartaSeleccionada - 1);
+            if (cartaSeleccionadaNormal.getColor().equals(this.cartaActual.getColor()) || cartaSeleccionadaNormal.getNumero() == ((CartaNormal) this.cartaActual).getNumero()){
+                this.cartaActual = this.jugadores[0].getCarta(cartaSeleccionada - 1);
+                this.jugadores[0].usarCartaUsuario(cartaSeleccionada);
+                System.out.println(this.cartaActual);
+            } else {
+                System.out.println("La carta es incompatible.");
+            }
+        } else {
+            //TODO Hacer todo el algoritmo con las cartas especiales y hacer el algoritmo de cada carta especial (como los cambia color o dirección, por ejemplo).
+            CartaEspecial cartaSeleccionadaEspecial = (CartaEspecial) this.jugadores[0].getCarta(cartaSeleccionada - 1);
+        }
+    }
+
     public void empezarJuego() {
-        do{
+        do {
             sb = new StringBuilder();
             sb.append("--------------------------------------\n").append("Carta Actual: ").append("\n").append(this.cartaActual).append("\n").append("--------------------------------------\n");
             System.out.print(sb.toString());
             for (int i = 0; i < this.jugadores.length; i++) {
                 sb = new StringBuilder();
+                //TODO Cambiar el for y hacer que empieze en el 1 ya que es redundante repetir el bucle del usuario, mejor automatizar en un for solo lo de los bots.
                 if (i == 0) {
-                    sb.append("Tus cartas:").append("\n").append(this.jugadores[i].getCartas()).append("\nQue carta deseas usar?: ");
-                    System.out.print(sb.toString());
-                    int cartaSeleccionada = scanner.nextInt();
-                    if ((cartaSeleccionada < 0) || (cartaSeleccionada > this.jugadores[i].getNumeroCartas())){
-                        System.out.println("Selección invalida.");
-                        break;
-                    }
-                    if (this.jugadores[i].getCarta(cartaSeleccionada) instanceof CartaNormal) {
-                        CartaNormal cartaSeleccionadaNormal = (CartaNormal) this.jugadores[i].getCarta(cartaSeleccionada);
-                        if (cartaSeleccionadaNormal.getColor().equals(this.cartaActual.getColor()) || cartaSeleccionadaNormal.getNumero() == ((CartaNormal) this.cartaActual).getNumero()){
-                            this.cartaActual = this.jugadores[i].getCarta(cartaSeleccionada);
-                            this.jugadores[i].usarCartaUsuario(cartaSeleccionada);
-                            System.out.println(this.cartaActual);
-                        } else {
-                            System.out.println("La carta es incompatible.");
-                            break;
-                        }
+                    if (jugadorTieneCartaValida()){
+                        sb.append("Tus cartas:\n").append(this.jugadores[i].getCartas()).append("\nQue carta deseas usar?: ");
+                        System.out.print(sb.toString());
+                        turnoJugador();
                     } else {
-                        //TODO Hacer todo el algoritmo con las cartas especiales y hacer el algoritmo de cada carta especial (como los cambia color o dirección, por ejemplo).
+                        sb.append("Tus cartas:\n").append(this.jugadores[i].getCartas()).append("No tienes cartas validas, añadiendo..\n");
+                        System.out.print(sb.toString());
+                        sb = new StringBuilder();
+                        for (int j = 0; j < 2; j++){
+                            if(!jugadores[i].llegaLimiteCartas()){
+                                this.jugadores[i].setCarta(Carta.getListaColores()[random.nextInt(4)], random.nextInt(15));
+                                if (jugadorTieneCartaValida()){
+                                    break;
+                                }
+                            } else {
+                                System.out.println("No puedes agarrar mas cartas, estas en el limite.");
+                            }
+                        }
+                        //MIRAR ESTA PARTE
+                        try {
+                            Thread.sleep(4000);
+                            if (jugadorTieneCartaValida()){
+                                sb.append("--------------------------------------\n").append("Carta Actual: ").append("\n").append(this.cartaActual).append("\n").append("--------------------------------------\n").append("Tus cartas:\n").append(this.jugadores[i].getCartas()).append("\nQue carta deseas usar?: ");
+                                System.out.print(sb.toString());
+                                turnoJugador();
+                            } else {
+                                System.out.println("Añadidas dos cartas, sigues sin cartas validas. Pasando turno..");
+                            }
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            System.out.println(e);
+                        }
                     }
                 } else {
                     //TODO Hacer toda el algoritmo de los bots. Que sea parecido al usuario pero automatizado y mas simplificado.

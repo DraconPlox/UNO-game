@@ -9,8 +9,15 @@ public class CartaEspecial extends Carta{
         }
     }
 
+    public void setColor(String color){
+        this.color = color;
+    }
     public String getTipo() {
         return this.tipo;
+    }
+
+    public static String[] getListaCartasEspeciales(){
+        return new String[] {"bloqueo", "cambiar dirección", "sumar dos", "sumar cuatro", "cambiar color"};
     }
 
     @Override
