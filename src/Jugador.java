@@ -50,8 +50,6 @@ public class Jugador {
         this.numeroCartas--;
     }
 
-    //ESTO NO FUNCIONA BIEN EN LA LINEA 67
-    //HACER DOS VARIABLES PARA CASTEAR FORZOSAMENTE EL PARAMETRO CARTAACTUAL
     public boolean tieneCartaValida(Carta cartaActual){
         boolean output = false;
         if (cartaActual instanceof CartaNormal){

@@ -112,7 +112,6 @@ public class Juego {
                                 System.out.println("No puedes agarrar mas cartas, estas en el limite.");
                             }
                         }
-                        //MIRAR ESTA PARTE
                         try {
                             Thread.sleep(4000);
                             if (jugadorTieneCartaValida()){
