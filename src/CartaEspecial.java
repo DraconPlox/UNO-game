@@ -4,7 +4,7 @@ public class CartaEspecial extends Carta{
     public CartaEspecial(String color, String tipo){
         super(color);
         this.tipo = tipo;
-        if(this.tipo == "cambiar color"){
+        if(this.tipo.equals("cambiar color") || this.tipo.equals("+4")){
             this.color = "-";
         }
     }
@@ -17,7 +17,8 @@ public class CartaEspecial extends Carta{
     }
 
     public static String[] getListaCartasEspeciales(){
-        return new String[] {"bloqueo", "cambiar dirección", "sumar dos", "sumar cuatro", "cambiar color"};
+        return new String[] {"bloqueo", "cambiar dirección", "+2", "+4", "cambiar color"};
+        //"bloqueo", "cambiar dirección", "+2", "+4", "cambiar color"
     }
 
     @Override

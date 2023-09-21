@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class CartaNormal extends Carta{
     private int numero;
 

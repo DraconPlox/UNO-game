@@ -44,7 +44,7 @@ public class Jugador {
     }
 
     public void usarCartaUsuario(int cartaSeleccionada) {
-        for (int i = cartaSeleccionada - 1; i < this.numeroCartas; i++) {
+        for (int i = cartaSeleccionada; i < this.numeroCartas; i++) {
             this.cartas[i] = this.cartas[i + 1];
         }
         this.numeroCartas--;
@@ -61,7 +61,7 @@ public class Jugador {
                         break;
                     }
                 } else {
-                    if (cartaNormalActual.getColor().equals(this.cartas[i].getColor())){
+                    if (cartaNormalActual.getColor().equals(this.cartas[i].getColor()) || this.cartas[i].getColor().equals("-")){
                         output = true;
                         break;
                     }
@@ -71,7 +71,7 @@ public class Jugador {
             CartaEspecial cartaEspecialActual = (CartaEspecial) cartaActual;
             for (int i = 0; i < this.numeroCartas; i++){
                 if (this.cartas[i] instanceof CartaEspecial){
-                    if (cartaEspecialActual.getColor().equals(this.cartas[i].getColor()) || cartaEspecialActual.getTipo().equals(((CartaEspecial) this.cartas[i]).getTipo())){
+                    if (cartaEspecialActual.getColor().equals(this.cartas[i].getColor()) || cartaEspecialActual.getTipo().equals(((CartaEspecial) this.cartas[i]).getTipo()) || (this.cartas[i].getColor().equals("-"))){
                         output = true;
                         break;
                     }
